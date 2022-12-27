@@ -20,7 +20,7 @@ namespace StoreCRM.Controllers
 		}
 
         /// <summary>
-        /// Uploads an attachment
+        /// Upload an attachment
         /// </summary>
         /// <param name="attachment">An attachment to upload</param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace StoreCRM.Controllers
         }
 
         /// <summary>
-        /// Returns an attachment by id
+        /// Get an attachment by id
         /// </summary>
         /// <param name="id">An attachment id</param>
         /// <returns></returns>

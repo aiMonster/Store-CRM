@@ -43,7 +43,7 @@ namespace StoreCRM.Controllers
         /// <returns></returns>
         /// <response code="200">Successfully created a new user</response>
         /// <response code="400">Bad input parameter(s)</response>
-        [HttpPost("/reqister")]
+        [HttpPost("/register")]
         public async Task<ActionResult> Register([FromBody] RegisterDTO user)
         {
             try
