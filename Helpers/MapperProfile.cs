@@ -8,7 +8,13 @@ namespace StoreCRM.Helpers
 	{
         public MapperProfile()
         {
+            CreateMap<Entities.User, UserDTO>();
             CreateMap<Entities.Product, ProductDTO>();
+            CreateMap<Entities.Category, CategoryInfoDTO>();
+            CreateMap<Entities.Attachment, AttachmentDTO>();
+
+            CreateMap<CreateProductDTO, Entities.Product>()
+                .ForMember(x => x.Attachments, opt => opt.Ignore());
         }
     }
 }

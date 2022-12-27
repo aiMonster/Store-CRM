@@ -5,6 +5,7 @@ namespace StoreCRM.Interfaces
 	{
         Task<Guid> UploadAsync(IFormFile attachment);
         Task<(byte[] content, string extension)> GetByIdAsync(Guid id);
+        Task RemoveRangeAsync(List<Guid> ids);
     }
 }
 

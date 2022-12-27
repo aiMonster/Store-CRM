@@ -1,14 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using StoreCRM.Entities;
 using StoreCRM.Enums;
 
-namespace StoreCRM.Entities
+namespace StoreCRM.DTOs
 {
-	public class Product
+	public class CreateProductDTO
 	{
-        [Key]
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -18,13 +15,9 @@ namespace StoreCRM.Entities
         public decimal Price { get; set; }
         public Currency Currency { get; set; }
 
-        public Guid AddedById { get; set; }
-        public User AddedBy { get; set; }
-
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; }
 
-        public List<Attachment> Attachments { get; set; }
+        public List<Guid> Attachments { get; set; }
     }
 }
 

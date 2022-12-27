@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StoreCRM.Interfaces;
 using StoreCRM.DTOs;
+using StoreCRM.Services;
+using StoreCRM.Entities;
 
 namespace StoreCRM.Controllers
 {
+    [Authorize]
     [Route("products/")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -24,11 +27,50 @@ namespace StoreCRM.Controllers
 		/// </summary>
 		/// <returns></returns>
 		/// <response code="200">An array of products</response>
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAll()
         {
             return Ok(await _productsService.GetAllAsync());
+        }
+
+        /// <summary>
+        /// Add new product
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Added product id</response>
+        /// <response code="400">Bad input parameter(s)</response>
+        [HttpPost]
+        public async Task<ActionResult> AddNewProduct([FromBody] CreateProductDTO product)
+        {
+            try
+            {
+                return Ok(await _productsService.AddProductAsync(product));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Remove product
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Success</response>
+        /// <response code="400">Product doesn't exists</response>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveProduct([FromRoute] Guid id)
+        {
+            try
+            {
+                await _productsService.RemoveProductAsync(id);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

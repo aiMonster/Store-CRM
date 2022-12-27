@@ -76,9 +76,9 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<UserResolver>();
 
+builder.Services.AddTransient<IAttachmentsService, AttachmentsService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
-builder.Services.AddTransient<IAttachmentsService, AttachmentsService>();
 builder.Services.AddTransient<ICategoriesService, CategoriesService>();
 
 builder.Services.AddAuthorization(options =>

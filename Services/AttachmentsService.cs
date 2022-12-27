@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Principal;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using StoreCRM.Context;
@@ -64,6 +65,19 @@ namespace StoreCRM.Services
             var attachmentContent = await File.ReadAllBytesAsync(path);
 
             return (attachmentContent, attachment.Extension);
+        }
+
+        public async Task RemoveRangeAsync(List<Guid> ids)
+        {
+            var attachments = await _dbContext.Attachments.Where(attachment => ids.Contains(attachment.Id)).ToListAsync();
+
+            attachments
+                .Select(attachment => Path.Combine(_rootDir, $"{attachment.Id}{attachment.Extension}"))
+                .Where(filePath => File.Exists(filePath)).ToList()
+                .ForEach(filePath => File.Delete(filePath));
+
+            _dbContext.Attachments.RemoveRange(attachments);
+            await _dbContext.SaveChangesAsync();
         }
 
         private (string name, string ext) SplitFileName(string fileName)
