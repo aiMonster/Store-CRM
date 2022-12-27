@@ -15,6 +15,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.12" />
     <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="MimeTypeMapOfficial" Version="1.0.17" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1303,6 +1304,10 @@
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <None Remove="AutoMapper" />
     <None Remove="Helpers\" />
+    <None Remove="Enums\" />
+    <None Remove="attachments\cdd59c18-d13a-4f30-9921-951bed31b39d.jpg" />
+    <None Remove="attachments\" />
+    <None Remove="MimeTypeMapOfficial" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -1311,5 +1316,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Enums\" />
+    <Folder Include="attachments\" />
   </ItemGroup>
 </Project>
