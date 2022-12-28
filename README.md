@@ -1,4 +1,5 @@
 # Store CRM
 
-> Run Migration `dotnet ef migrations add InitialCreate`  
-> Clen up Docker resources `docker system prune`
+> Run Migration `dotnet ef migrations add InitialCreate`
+
+> Clean up Docker resources `docker system prune`
