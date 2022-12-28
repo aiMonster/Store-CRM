@@ -3,7 +3,7 @@ namespace StoreCRM.DTOs
 {
 	public class CreateCategoryDTO
 	{
-        public Guid? ParentId { get; set; }
+        public int? ParentId { get; set; }
         public string Name { get; set; }
     }
 }

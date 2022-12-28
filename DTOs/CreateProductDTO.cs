@@ -15,7 +15,7 @@ namespace StoreCRM.DTOs
         public decimal Price { get; set; }
         public Currency Currency { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         public List<Guid> Attachments { get; set; }
     }

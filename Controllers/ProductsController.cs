@@ -59,7 +59,7 @@ namespace StoreCRM.Controllers
         /// <response code="200">Success</response>
         /// <response code="400">Product doesn't exists</response>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> RemoveProduct([FromRoute] Guid id)
+        public async Task<ActionResult> RemoveProduct([FromRoute]int id)
         {
             try
             {

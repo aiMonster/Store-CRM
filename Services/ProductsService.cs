@@ -40,7 +40,7 @@ namespace StoreCRM.Services
             return _mapper.Map<List<ProductDTO>>(products);
         }
 
-        public async Task<Guid> AddProductAsync(CreateProductDTO product)
+        public async Task<int> AddProductAsync(CreateProductDTO product)
         {
             var category = await _dbContext.Categories.FindAsync(product.CategoryId);
             if (category == null)
@@ -57,24 +57,22 @@ namespace StoreCRM.Services
                 throw new Exception("Some of the attachments could not be found");
             }
 
-            var id = Guid.NewGuid();
-
             var productEntity = _mapper.Map<Product>(product);
 
-            productEntity.Id = id;
             productEntity.AddedById = _userResolver.GetUserId();
-
-            attachments.ForEach(attachment => attachment.ProductId = id);
-
-            _dbContext.Attachments.UpdateRange(attachments);
+            
             await _dbContext.Products.AddAsync(productEntity);
-
             await _dbContext.SaveChangesAsync();
 
-            return id;
+            attachments.ForEach(attachment => attachment.ProductId = productEntity.Id);
+
+            _dbContext.Attachments.UpdateRange(attachments);
+            await _dbContext.SaveChangesAsync();
+
+            return productEntity.Id;
         }
 
-        public async Task RemoveProductAsync(Guid id)
+        public async Task RemoveProductAsync(int id)
         {
             var product = await _dbContext.Products.FindAsync(id);
 

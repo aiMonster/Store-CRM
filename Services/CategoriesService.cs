@@ -18,7 +18,7 @@ namespace StoreCRM.Services
             _dbContext = dbContext;
         }
 
-        public async Task<Guid> AddNewCategoryAsync(CreateCategoryDTO category)
+        public async Task<int> AddNewCategoryAsync(CreateCategoryDTO category)
         {
             if (category.ParentId != null)
             {
@@ -30,11 +30,8 @@ namespace StoreCRM.Services
                 }
             }
 
-            var id = Guid.NewGuid();
-
             var newCategory = new Category()
             {
-                Id = id,
                 ParentId = category.ParentId,
                 Name = category.Name
             };
@@ -42,7 +39,7 @@ namespace StoreCRM.Services
             await _dbContext.Categories.AddAsync(newCategory);
             await _dbContext.SaveChangesAsync();
 
-            return id;
+            return newCategory.Id;
         }
 
         public async Task<List<CategoryDTO>> GetAllCategoriesAsync()
@@ -52,7 +49,7 @@ namespace StoreCRM.Services
             return MapCategoryIncludingChildren(null, categories);
         }
 
-        public async Task RemoveCategoryByIdAsync(Guid id)
+        public async Task RemoveCategoryByIdAsync(int id)
         {
             var category = await _dbContext.Categories.FindAsync(id);
 
@@ -83,7 +80,7 @@ namespace StoreCRM.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        private List<Category> GetTouchedCategories(Guid parentId, List<Category> categories)
+        private List<Category> GetTouchedCategories(int parentId, List<Category> categories)
         {
             var touchedCategories = new List<Category>();
 
@@ -96,7 +93,7 @@ namespace StoreCRM.Services
             return touchedCategories;
         }
 
-        private List<CategoryDTO> MapCategoryIncludingChildren(Guid? parentId, List<Category> categories)
+        private List<CategoryDTO> MapCategoryIncludingChildren(int? parentId, List<Category> categories)
         {
             return categories.Where(category => category.ParentId == parentId).Select(category =>
             {

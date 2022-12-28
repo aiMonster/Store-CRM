@@ -62,7 +62,7 @@ namespace StoreCRM.Controllers
         /// <returns></returns>
         /// <response code="200">Success</response>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> RemoveCategoryById([FromRoute]Guid id)
+        public async Task<ActionResult> RemoveCategoryById([FromRoute]int id)
         {
             try
             {

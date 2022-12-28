@@ -11,7 +11,7 @@ namespace StoreCRM.Entities
 		public string Name { get; set; }
 		public string Extension { get; set; }
 
-		public Guid? ProductId { get; set; }
+		public int? ProductId { get; set; }
 	}
 }
 

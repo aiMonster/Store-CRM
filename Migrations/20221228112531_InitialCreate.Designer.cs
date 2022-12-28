@@ -12,8 +12,8 @@ using StoreCRM.Context;
 namespace StoreCRM.Migrations
 {
     [DbContext(typeof(StoreCrmDbContext))]
-    [Migration("20221227124829_AddedAttachmentsWithCategories")]
-    partial class AddedAttachmentsWithCategories
+    [Migration("20221228112531_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,8 +38,8 @@ namespace StoreCRM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -50,16 +50,18 @@ namespace StoreCRM.Migrations
 
             modelBuilder.Entity("StoreCRM.Entities.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -68,9 +70,11 @@ namespace StoreCRM.Migrations
 
             modelBuilder.Entity("StoreCRM.Entities.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<Guid>("AddedById")
                         .HasColumnType("uuid");
@@ -79,8 +83,8 @@ namespace StoreCRM.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Code")
                         .HasColumnType("integer");
