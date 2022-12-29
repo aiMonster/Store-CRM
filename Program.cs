@@ -11,6 +11,7 @@ using StoreCRM;
 using Microsoft.OpenApi.Models;
 using StoreCRM.DTOs;
 using System.Reflection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +81,7 @@ builder.Services.AddTransient<IAttachmentsService, AttachmentsService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<ICategoriesService, CategoriesService>();
+builder.Services.AddTransient<ITasksService, TasksService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -128,6 +130,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseCors("GodPolicy");
+
+#endregion
+
+#region Apply DB migrations
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<StoreCrmDbContext>();
+    db.Database.Migrate();
+}
 
 #endregion
 
