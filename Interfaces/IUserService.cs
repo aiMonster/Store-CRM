@@ -7,6 +7,7 @@ namespace StoreCRM.Interfaces
 	{
         Task<string> GetTokenAsync(LoginDTO user);
         Task AddNewUserAsync(RegisterDTO user);
+        Task<List<UserDTO>> GetAllUsersAsync();
     }
 }
 

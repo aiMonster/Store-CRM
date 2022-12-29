@@ -8,15 +8,18 @@ using StoreCRM.Context;
 using Microsoft.EntityFrameworkCore;
 using StoreCRM.Interfaces;
 using StoreCRM.Entities;
+using AutoMapper;
 
 namespace StoreCRM.Services
 {
 	public class UserService : IUserService
 	{
+        private readonly IMapper _mapper;
         private readonly StoreCrmDbContext _dbContext;
 
-		public UserService(StoreCrmDbContext dbContext)
+		public UserService(IMapper mapper, StoreCrmDbContext dbContext)
 		{
+            _mapper = mapper;
             _dbContext = dbContext;
 		}
 
@@ -55,6 +58,13 @@ namespace StoreCRM.Services
                 throw new Exception("Username or password is incorrect");
             }
             return EncodedJwt(identity);
+        }
+
+        public async Task<List<UserDTO>> GetAllUsersAsync()
+        {
+            var users = await _dbContext.Users.ToListAsync();
+
+            return _mapper.Map<List<UserDTO>>(users);
         }
 
         private async Task<ClaimsIdentity> GetIdentity(LoginDTO user)
