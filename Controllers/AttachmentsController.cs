@@ -7,7 +7,6 @@ using StoreCRM.Interfaces;
 
 namespace StoreCRM.Controllers
 {
-    [Authorize]
     [Route("attachments/")]
     [ApiController]
     public class AttachmentsController : ControllerBase
@@ -26,6 +25,7 @@ namespace StoreCRM.Controllers
         /// <returns></returns>
         /// <response code="200">Uploaded attachment id</response>
         /// <response code="400">Bad input parameter(s)</response>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Guid>> UploadAttachment(IFormFile attachment)
         {
