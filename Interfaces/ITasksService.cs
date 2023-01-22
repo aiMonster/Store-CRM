@@ -8,6 +8,7 @@ namespace StoreCRM.Interfaces
 	{
         Task<List<TaskDTO>> GetAllAsync();
         Task<int> CreateTaskAsync(CreateTaskDTO task);
+        Task RemoveTaskByIdAsync(int id);
         Task UpdateStatusAsync(int taskId, StoreTaskStatus status);
         Task UpdateAssigneeAsync(int taskId, Guid? assigneeId);
     }

@@ -49,6 +49,19 @@ namespace StoreCRM.Services
             return taskEntity.Id;
         }
 
+        public async Task RemoveTaskByIdAsync(int id)
+        {
+            var task = await _dbContext.Tasks.FindAsync(id);
+
+            if (task == null)
+            {
+                throw new Exception("Task doesn't exist");
+            }
+
+            _dbContext.Remove(task);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateStatusAsync(int taskId, StoreTaskStatus status)
         {
             var task = await _dbContext.Tasks.FindAsync(taskId);

@@ -51,6 +51,26 @@ namespace StoreCRM.Controllers
         }
 
         /// <summary>
+        /// Remove task
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Success</response>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveTaskById([FromRoute] int id)
+        {
+            try
+            {
+                await _tasksService.RemoveTaskByIdAsync(id);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
         /// Updates task status
         /// </summary>
         /// <returns></returns>
