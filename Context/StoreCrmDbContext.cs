@@ -14,5 +14,7 @@ namespace StoreCRM.Context
         public DbSet<Attachment> Attachments => Set<Attachment>();
         public DbSet<StoreTask> Tasks => Set<StoreTask>();
         public DbSet<Stock> Stocks => Set<Stock>();
+        public DbSet<Posting> Postings => Set<Posting>();
+        public DbSet<PostingProduct> PostingProducts => Set<PostingProduct>();
     }
 }

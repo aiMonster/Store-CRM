@@ -36,7 +36,7 @@ namespace StoreCRM.Controllers
         /// <returns></returns>
         /// <response code="200">Added stock id</response>
         [HttpPost]
-        public async Task<ActionResult> AddNewStock([FromBody] CreateStockDTO stock)
+        public async Task<ActionResult<int>> AddNewStock([FromBody] CreateStockDTO stock)
         {
             return Ok(await _stocksService.AddStockAsync(stock));
         }
@@ -60,6 +60,47 @@ namespace StoreCRM.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        /// <summary>
+        /// Create postings to stock
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">Posting id</response>
+        /// <response code="400">Bad input parameter(s)</response>
+        [HttpPost("{id}/postings")]
+        public async Task<ActionResult<int>> AddProductsToStock([FromRoute] int id, [FromBody] List<PostingNewItemDTO> products)
+        {
+            try
+            {
+                return Ok(await _stocksService.AddProductsAsync(id, products));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // <summary>
+        /// Get all postings
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">An array of postings</response>
+        [HttpGet("postings")]
+        public async Task<ActionResult<IEnumerable<PostingDTO>>> GetAllPostings()
+        {
+            return Ok(await _stocksService.GetAllPostingsAsync());
+        }
+
+        // <summary>
+        /// Get all posting products
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">An array of postings products</response>
+        [HttpGet("postings/{id}/products")]
+        public async Task<ActionResult<IEnumerable<PostingItemDTO>>> GetAllPostingProducts([FromRoute] int id)
+        {
+            return Ok(await _stocksService.GetAllPostingProductsAsync(id));
         }
     }
 }

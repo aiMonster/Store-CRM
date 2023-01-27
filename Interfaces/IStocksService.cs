@@ -9,6 +9,9 @@ namespace StoreCRM.Interfaces
         Task<List<StockDTO>> GetAllAsync();
         Task<int> AddStockAsync(CreateStockDTO stock);
         Task RemoveStockByIdAsync(int id);
+        Task<int> AddProductsAsync(int id, List<PostingNewItemDTO> products);
+        Task<List<PostingDTO>> GetAllPostingsAsync();
+        Task<List<PostingItemDTO>> GetAllPostingProductsAsync(int postingId);
     }
 }
 
