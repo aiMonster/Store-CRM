@@ -13,8 +13,10 @@ namespace StoreCRM.Helpers
             CreateMap<Entities.Category, CategoryInfoDTO>();
             CreateMap<Entities.Attachment, AttachmentDTO>();
             CreateMap<Entities.StoreTask, TaskDTO>();
+            CreateMap<Entities.Stock, StockDTO>();
 
             CreateMap<CreateTaskDTO, Entities.StoreTask>();
+            CreateMap<CreateStockDTO, Entities.Stock>();
             CreateMap<CreateProductDTO, Entities.Product>()
                 .ForMember(x => x.Attachments, opt => opt.Ignore());
         }

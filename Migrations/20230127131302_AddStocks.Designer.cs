@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StoreCRM.Context;
@@ -11,9 +12,10 @@ using StoreCRM.Context;
 namespace StoreCRM.Migrations
 {
     [DbContext(typeof(StoreCrmDbContext))]
-    partial class StoreCrmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230127131302_AddStocks")]
+    partial class AddStocks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

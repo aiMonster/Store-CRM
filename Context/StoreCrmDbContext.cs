@@ -13,5 +13,6 @@ namespace StoreCRM.Context
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Attachment> Attachments => Set<Attachment>();
         public DbSet<StoreTask> Tasks => Set<StoreTask>();
+        public DbSet<Stock> Stocks => Set<Stock>();
     }
 }
