@@ -63,7 +63,8 @@ namespace StoreCRM.Services
             }
 
             var productsIds = postingItems.Select(item => item.ProductId);
-            var allProductsExist = await _dbContext.Products.AllAsync(product => productsIds.Contains(product.Id));
+            var foundProductsCount = await _dbContext.Products.Where(product => productsIds.Contains(product.Id)).CountAsync();
+            var allProductsExist = foundProductsCount == productsIds.Count();
 
             if (!allProductsExist)
             {
