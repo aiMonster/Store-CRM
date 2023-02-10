@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore;
 using StoreCRM.Entities;
 
@@ -16,5 +17,12 @@ namespace StoreCRM.Context
         public DbSet<Stock> Stocks => Set<Stock>();
         public DbSet<Posting> Postings => Set<Posting>();
         public DbSet<PostingProduct> PostingProducts => Set<PostingProduct>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Stock>()
+                .Property(b => b.IsRemoved)
+                .HasDefaultValue(false);
+        }
     }
 }

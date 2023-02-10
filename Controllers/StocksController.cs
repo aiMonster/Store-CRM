@@ -25,9 +25,9 @@ namespace StoreCRM.Controllers
         /// <returns></returns>
         /// <response code="200">An array of stocks</response>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StockDTO>>> GetAll()
+        public async Task<ActionResult<IEnumerable<StockDTO>>> GetAll([FromQuery] bool includeRemoved = false)
         {
-            return Ok(await _stocksService.GetAllAsync());
+            return Ok(await _stocksService.GetAllAsync(includeRemoved));
         }
 
         /// <summary>

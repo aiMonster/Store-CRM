@@ -23,11 +23,15 @@ namespace StoreCRM.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<StockDTO>> GetAllAsync()
+        public async Task<List<StockDTO>> GetAllAsync(bool includeRemoved)
         {
-            var stcks = await _dbContext.Stocks.ToListAsync();
+            var query = _dbContext.Stocks.AsQueryable();
 
-            return _mapper.Map<List<StockDTO>>(stcks);
+            query = includeRemoved ? query : query.Where(stock => !stock.IsRemoved);
+
+            var stocks = await query.ToListAsync();
+
+            return _mapper.Map<List<StockDTO>>(stocks);
         }
 
         public async Task<int> AddStockAsync(CreateStockDTO stock)
@@ -44,12 +48,14 @@ namespace StoreCRM.Services
         {
             var stock = await _dbContext.Stocks.FindAsync(id);
 
-            if (stock == null)
+            if (stock == null || stock.IsRemoved)
             {
                 throw new Exception("Stock doesn't exist");
             }
 
-            _dbContext.Remove(stock);
+            stock.IsRemoved = true;
+
+            _dbContext.Update(stock);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -57,7 +63,7 @@ namespace StoreCRM.Services
         {
             var stock = await _dbContext.Stocks.FindAsync(stockId);
 
-            if (stock == null)
+            if (stock == null || stock.IsRemoved)
             {
                 throw new Exception("Stock doesn't exist");
             }
