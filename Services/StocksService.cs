@@ -59,7 +59,7 @@ namespace StoreCRM.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> AddProductsAsync(int stockId, List<PostingNewItemDTO> postingItems)
+        public async Task<int> AddProductsAsync(int stockId, CreatePostingDTO postingInfo)
         {
             var stock = await _dbContext.Stocks.FindAsync(stockId);
 
@@ -68,7 +68,14 @@ namespace StoreCRM.Services
                 throw new Exception("Stock doesn't exist");
             }
 
-            var productsIds = postingItems.Select(item => item.ProductId);
+            var agent = await _dbContext.Agents.FindAsync(postingInfo.AgentId);
+
+            if (agent == null)
+            {
+                throw new Exception("Agent doesn't exist");
+            }
+
+            var productsIds = postingInfo.Products.Select(item => item.ProductId);
             var foundProductsCount = await _dbContext.Products.Where(product => productsIds.Contains(product.Id)).CountAsync();
             var allProductsExist = foundProductsCount == productsIds.Count();
 
@@ -81,13 +88,14 @@ namespace StoreCRM.Services
             {
                 Date = DateTimeOffset.UtcNow,
                 StockId = stockId,
+                AgentId = postingInfo.AgentId,
                 AddedById = _userResolver.GetUserId()
             };
 
             await _dbContext.Postings.AddAsync(posting);
             await _dbContext.SaveChangesAsync();
 
-            var postingProducts = postingItems.Select(item => {
+            var postingProducts = postingInfo.Products.Select(item => {
                 var postingProduct = _mapper.Map<PostingProduct>(item);
                 postingProduct.PostingId = posting.Id;
 
@@ -105,6 +113,7 @@ namespace StoreCRM.Services
             var postingsEntities = await _dbContext.Postings
                 .Include(posting => posting.AddedBy)
                 .Include(posting => posting.Stock)
+                .Include(posting => posting.Agent)
                 .Include(posting => posting.Products)
                 .ToListAsync();
 

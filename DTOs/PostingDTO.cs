@@ -1,5 +1,4 @@
 ﻿using System;
-using StoreCRM.Entities;
 
 namespace StoreCRM.DTOs
 {
@@ -10,6 +9,8 @@ namespace StoreCRM.DTOs
         public DateTimeOffset Date { get; set; }
 
         public StockDTO Stock { get; set; }
+
+        public AgentInfoDTO Agent { get; set; }
 
         public UserDTO AddedBy { get; set; }
 

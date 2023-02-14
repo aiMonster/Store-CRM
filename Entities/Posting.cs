@@ -13,6 +13,9 @@ namespace StoreCRM.Entities
         public int StockId { get; set; }
         public Stock Stock { get; set; }
 
+        public int? AgentId { get; set; }
+        public Agent Agent { get; set; }
+
         public Guid AddedById { get; set; }
         public User AddedBy { get; set; }
 

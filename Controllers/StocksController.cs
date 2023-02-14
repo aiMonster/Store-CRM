@@ -69,11 +69,11 @@ namespace StoreCRM.Controllers
         /// <response code="200">Posting id</response>
         /// <response code="400">Bad input parameter(s)</response>
         [HttpPost("{id}/postings")]
-        public async Task<ActionResult<int>> AddProductsToStock([FromRoute] int id, [FromBody] List<PostingNewItemDTO> products)
+        public async Task<ActionResult<int>> AddProductsToStock([FromRoute] int id, [FromBody] CreatePostingDTO postingInfo)
         {
             try
             {
-                return Ok(await _stocksService.AddProductsAsync(id, products));
+                return Ok(await _stocksService.AddProductsAsync(id, postingInfo));
             }
             catch (Exception e)
             {

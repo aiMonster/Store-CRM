@@ -83,6 +83,7 @@ builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<ICategoriesService, CategoriesService>();
 builder.Services.AddTransient<ITasksService, TasksService>();
 builder.Services.AddTransient<IStocksService, StocksService>();
+builder.Services.AddTransient<IAgentsService, AgentsService>();
 
 builder.Services.AddAuthorization(options =>
 {

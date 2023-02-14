@@ -17,6 +17,7 @@ namespace StoreCRM.Context
         public DbSet<Stock> Stocks => Set<Stock>();
         public DbSet<Posting> Postings => Set<Posting>();
         public DbSet<PostingProduct> PostingProducts => Set<PostingProduct>();
+        public DbSet<Agent> Agents => Set<Agent>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

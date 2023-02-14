@@ -16,12 +16,15 @@ namespace StoreCRM.Helpers
             CreateMap<Entities.Stock, StockDTO>();
             CreateMap<Entities.Posting, PostingDTO>();
             CreateMap<Entities.PostingProduct, PostingItemDTO>();
+            CreateMap<Entities.Agent, AgentDTO>();
+            CreateMap<Entities.Agent, AgentInfoDTO>();
 
             CreateMap<CreateTaskDTO, Entities.StoreTask>();
             CreateMap<CreateStockDTO, Entities.Stock>();
             CreateMap<PostingNewItemDTO, Entities.PostingProduct>();
             CreateMap<CreateProductDTO, Entities.Product>()
                 .ForMember(x => x.Attachments, opt => opt.Ignore());
+            CreateMap<CreateAgentDTO, Entities.Agent>();
         }
     }
 }
