@@ -25,6 +25,7 @@ namespace StoreCRM.Entities
         public Category Category { get; set; }
 
         public List<Attachment> Attachments { get; set; }
+        public List<PostingProduct> Postings { get; set; }
     }
 }
 
