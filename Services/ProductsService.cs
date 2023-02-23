@@ -78,11 +78,20 @@ namespace StoreCRM.Services
 
         public async Task RemoveProductAsync(int id)
         {
-            var product = await _dbContext.Products.FindAsync(id);
+            var product = await _dbContext.Products
+                .Include(product => product.Postings)
+                .FirstOrDefaultAsync(product => product.Id == id);
 
             if (product == null || product.IsRemoved)
             {
                 throw new Exception("Product doesn't exist");
+            }
+
+            var postedProductsCount = product.Postings.Sum(posting => posting.Count);
+
+            if (postedProductsCount > 0)
+            {
+                throw new Exception("Product can't be removed until it stays on any stock");
             }
 
             product.IsRemoved = true;
