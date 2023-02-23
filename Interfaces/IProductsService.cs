@@ -5,7 +5,7 @@ namespace StoreCRM.Interfaces
 {
 	public interface IProductsService
 	{
-        Task<List<ProductDTO>> GetAllAsync();
+        Task<List<ProductDTO>> GetAllAsync(bool includeRemoved);
         Task<int> AddProductAsync(CreateProductDTO product);
         Task RemoveProductAsync(int id);
     }

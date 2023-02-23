@@ -26,6 +26,8 @@ namespace StoreCRM.Entities
 
         public List<Attachment> Attachments { get; set; }
         public List<PostingProduct> Postings { get; set; }
+
+        public bool IsRemoved { get; set; }
     }
 }
 

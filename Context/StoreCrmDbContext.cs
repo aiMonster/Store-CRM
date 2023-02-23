@@ -22,7 +22,11 @@ namespace StoreCRM.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Stock>()
-                .Property(b => b.IsRemoved)
+                .Property(stock => stock.IsRemoved)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<Product>()
+                .Property(product => product.IsRemoved)
                 .HasDefaultValue(false);
         }
     }

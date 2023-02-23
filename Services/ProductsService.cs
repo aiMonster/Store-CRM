@@ -29,9 +29,13 @@ namespace StoreCRM.Services
             _attachmentsService = attachmentsService;
         }
 
-        public async Task<List<ProductDTO>> GetAllAsync()
+        public async Task<List<ProductDTO>> GetAllAsync(bool includeRemoved)
         {
-            var products = await _dbContext.Products
+            var query = _dbContext.Products.AsQueryable();
+
+            query = includeRemoved ? query : query.Where(product => !product.IsRemoved);
+
+            var products = await query
                 .Include(product => product.AddedBy)
                 .Include(product => product.Category)
                 .Include(product => product.Attachments)
@@ -76,19 +80,14 @@ namespace StoreCRM.Services
         {
             var product = await _dbContext.Products.FindAsync(id);
 
-            if (product == null)
+            if (product == null || product.IsRemoved)
             {
                 throw new Exception("Product doesn't exist");
             }
 
-            var attachmentsIds = await _dbContext.Attachments
-                .Where(attachment => attachment.ProductId == id)
-                .Select(attachment => attachment.Id)
-                .ToListAsync();
+            product.IsRemoved = true;
 
-            await _attachmentsService.RemoveRangeAsync(attachmentsIds);
-
-            _dbContext.Remove(product);
+            _dbContext.Update(product);
             await _dbContext.SaveChangesAsync();
         }
     }
